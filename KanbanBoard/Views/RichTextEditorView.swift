@@ -64,7 +64,7 @@ struct RichTextEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
-                .help("Bold (Markdown: **text**)")
+                .help("Bold - Wrap text with double asterisks")
 
                 // Italic
                 Button(action: { insertFormatting("_", "_") }) {
@@ -73,7 +73,7 @@ struct RichTextEditorView: View {
                 }
                 .buttonStyle(.bordered)
                 .controlSize(.small)
-                .help("Italic (Markdown: _text_)")
+                .help("Italic - Wrap text with underscores")
 
                 Divider()
                     .frame(height: 16)
