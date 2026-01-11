@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E92AB51F2F138A4200E5137E"
-               BuildableName = "simple-task-manager.app"
-               BlueprintName = "simple-task-manager"
-               ReferencedContainer = "container:simple-task-manager.xcodeproj">
+               BuildableName = "Lifeboard.app"
+               BlueprintName = "Lifeboard"
+               ReferencedContainer = "container:Lifeboard.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -37,7 +37,7 @@
                BlueprintIdentifier = "E92AB5302F138A4700E5137E"
                BuildableName = "simple-task-managerTests.xctest"
                BlueprintName = "simple-task-managerTests"
-               ReferencedContainer = "container:simple-task-manager.xcodeproj">
+               ReferencedContainer = "container:Lifeboard.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -48,13 +48,13 @@
                BlueprintIdentifier = "E92AB53A2F138A4700E5137E"
                BuildableName = "simple-task-managerUITests.xctest"
                BlueprintName = "simple-task-managerUITests"
-               ReferencedContainer = "container:simple-task-manager.xcodeproj">
+               ReferencedContainer = "container:Lifeboard.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E92AB51F2F138A4200E5137E"
-            BuildableName = "simple-task-manager.app"
-            BlueprintName = "simple-task-manager"
-            ReferencedContainer = "container:simple-task-manager.xcodeproj">
+            BuildableName = "Lifeboard.app"
+            BlueprintName = "Lifeboard"
+            ReferencedContainer = "container:Lifeboard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E92AB51F2F138A4200E5137E"
-            BuildableName = "simple-task-manager.app"
-            BlueprintName = "simple-task-manager"
-            ReferencedContainer = "container:simple-task-manager.xcodeproj">
+            BuildableName = "Lifeboard.app"
+            BlueprintName = "Lifeboard"
+            ReferencedContainer = "container:Lifeboard.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
