@@ -15,7 +15,7 @@ class PersistenceManager {
 
     private var dataDirectory: URL {
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
-        let appSupportDir = paths[0].appendingPathComponent("Lifeboard", isDirectory: true)
+        let appSupportDir = paths[0].appendingPathComponent("KanbanBoard", isDirectory: true)
 
         // Create directory if it doesn't exist
         if !FileManager.default.fileExists(atPath: appSupportDir.path) {
