@@ -142,5 +142,9 @@ struct TaskCardView: View {
         .onHover { hovering in
             isHovering = hovering
         }
+        .onTapGesture(count: 2) {
+            onEdit()
+        }
+        .help("Double-click to edit")
     }
 }
