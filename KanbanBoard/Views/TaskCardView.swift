@@ -13,6 +13,7 @@ struct TaskCardView: View {
     let isDimmed: Bool
     let onDelete: () -> Void
     let onEdit: () -> Void
+    let dragItemProvider: () -> NSItemProvider
 
     @State private var isHovering = false
     @State private var isExpanded = false
@@ -35,6 +36,15 @@ struct TaskCardView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
             HStack(alignment: .top) {
+                // Drag handle
+                Image(systemName: "line.3.horizontal")
+                    .font(.system(size: 10))
+                    .foregroundColor(.secondary.opacity(0.5))
+                    .frame(width: 16)
+                    .padding(.top, 2)
+                    .help("Drag to move task")
+                    .onDrag(dragItemProvider)
+
                 // Project color indicator
                 if let project = project {
                     Circle()

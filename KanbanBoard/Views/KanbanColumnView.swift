@@ -53,13 +53,13 @@ struct KanbanColumnView: View {
                             },
                             onEdit: {
                                 onEditTask(task)
+                            },
+                            dragItemProvider: {
+                                // Create drag item with task ID
+                                let itemProvider = NSItemProvider(object: task.id.uuidString as NSString)
+                                return itemProvider
                             }
                         )
-                        .onDrag {
-                            // Create drag item with task ID
-                            let itemProvider = NSItemProvider(object: task.id.uuidString as NSString)
-                            return itemProvider
-                        }
                     }
 
                     // Drop zone indicator when dragging
