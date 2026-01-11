@@ -14,6 +14,7 @@ struct TaskCardView: View {
     let onDelete: () -> Void
 
     @State private var isHovering = false
+    @State private var isExpanded = false
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -35,17 +36,43 @@ struct TaskCardView: View {
                         Text(task.description)
                             .font(.system(size: 11))
                             .foregroundColor(.secondary)
-                            .lineLimit(2)
+                            .lineLimit(isExpanded ? nil : 2)
                     }
 
-                    if let project = project {
-                        Text(project.name)
-                            .font(.system(size: 10, weight: .medium))
-                            .foregroundColor(project.color)
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2)
-                            .background(project.color.opacity(0.15))
+                    // Show notes if expanded
+                    if isExpanded && !task.notes.isEmpty {
+                        Text(task.notes)
+                            .font(.system(size: 10, design: .monospaced))
+                            .foregroundColor(.secondary.opacity(0.8))
+                            .padding(6)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color(nsColor: .textBackgroundColor))
                             .cornerRadius(4)
+                    }
+
+                    HStack(spacing: 6) {
+                        if let project = project {
+                            Text(project.name)
+                                .font(.system(size: 10, weight: .medium))
+                                .foregroundColor(project.color)
+                                .padding(.horizontal, 6)
+                                .padding(.vertical, 2)
+                                .background(project.color.opacity(0.15))
+                                .cornerRadius(4)
+                        }
+
+                        // Expand button if there are notes
+                        if !task.notes.isEmpty {
+                            Button(action: { isExpanded.toggle() }) {
+                                HStack(spacing: 2) {
+                                    Image(systemName: isExpanded ? "chevron.up" : "chevron.down")
+                                    Text(isExpanded ? "Less" : "More")
+                                }
+                                .font(.system(size: 9, weight: .medium))
+                                .foregroundColor(.secondary)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
                 }
 
