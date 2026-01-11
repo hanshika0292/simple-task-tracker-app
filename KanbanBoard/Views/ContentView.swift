@@ -125,86 +125,103 @@ struct AddTaskSheet: View {
     @Binding var selectedProjectId: UUID?
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            HStack {
-                Text("New Task")
-                    .font(.system(size: 18, weight: .semibold))
-                Spacer()
+        VStack(spacing: 0) {
+            // Header (fixed)
+            VStack(spacing: 0) {
+                HStack {
+                    Text("New Task")
+                        .font(.system(size: 18, weight: .semibold))
+                    Spacer()
+                }
+                .padding(24)
+                .padding(.bottom, 0)
+
+                Divider()
+                    .padding(.top, 16)
             }
 
-            // Title
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Title")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
-                TextField("Enter task title", text: $title)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 14))
-            }
+            // Scrollable content
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Title
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Title")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
+                        TextField("Enter task title", text: $title)
+                            .textFieldStyle(.roundedBorder)
+                            .font(.system(size: 14))
+                    }
 
-            // Project selector (button style)
-            VStack(alignment: .leading, spacing: 8) {
-                Text("Project")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
+                    // Project selector (button style)
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Project")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
 
-                HStack(spacing: 8) {
-                    ForEach(viewModel.projects) { project in
-                        Button(action: {
-                            selectedProjectId = project.id
-                        }) {
-                            HStack(spacing: 6) {
-                                Circle()
-                                    .fill(project.color)
-                                    .frame(width: 10, height: 10)
-                                Text(project.name)
-                                    .font(.system(size: 12, weight: .medium))
-                            }
-                            .padding(.horizontal, 12)
-                            .padding(.vertical, 6)
-                            .background(
-                                selectedProjectId == project.id
-                                    ? project.color.opacity(0.15)
-                                    : Color.clear
-                            )
-                            .overlay(
-                                RoundedRectangle(cornerRadius: 6)
-                                    .stroke(
+                        HStack(spacing: 8) {
+                            ForEach(viewModel.projects) { project in
+                                Button(action: {
+                                    selectedProjectId = project.id
+                                }) {
+                                    HStack(spacing: 6) {
+                                        Circle()
+                                            .fill(project.color)
+                                            .frame(width: 10, height: 10)
+                                        Text(project.name)
+                                            .font(.system(size: 12, weight: .medium))
+                                    }
+                                    .padding(.horizontal, 12)
+                                    .padding(.vertical, 6)
+                                    .background(
                                         selectedProjectId == project.id
-                                            ? project.color
-                                            : Color.secondary.opacity(0.3),
-                                        lineWidth: selectedProjectId == project.id ? 2 : 1
+                                            ? project.color.opacity(0.15)
+                                            : Color.clear
                                     )
-                            )
-                            .cornerRadius(6)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 6)
+                                            .stroke(
+                                                selectedProjectId == project.id
+                                                    ? project.color
+                                                    : Color.secondary.opacity(0.3),
+                                                lineWidth: selectedProjectId == project.id ? 2 : 1
+                                            )
+                                    )
+                                    .cornerRadius(6)
+                                }
+                                .buttonStyle(.plain)
+                            }
                         }
-                        .buttonStyle(.plain)
+                    }
+
+                    // Description
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Short Description")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
+                        TextField("Quick summary (optional)", text: $description, axis: .vertical)
+                            .textFieldStyle(.roundedBorder)
+                            .font(.system(size: 12))
+                            .lineLimit(2...3)
+                    }
+
+                    // Rich text notes
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Detailed Notes (optional)")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
+
+                        RichTextEditorView(text: $notes)
                     }
                 }
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
             }
 
-            // Description
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Short Description")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
-                TextField("Quick summary (optional)", text: $description, axis: .vertical)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 12))
-                    .lineLimit(2...3)
-            }
+            Divider()
 
-            // Rich text notes
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Detailed Notes (optional)")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
-
-                RichTextEditorView(text: $notes)
-            }
-
-            // Action buttons
+            // Action buttons (fixed at bottom)
             HStack(spacing: 12) {
                 Button("Cancel") {
                     isPresented = false
@@ -230,9 +247,10 @@ struct AddTaskSheet: View {
                 .buttonStyle(.borderedProminent)
                 .disabled(title.isEmpty || selectedProjectId == nil)
             }
+            .padding(24)
+            .padding(.top, 16)
         }
-        .padding(24)
-        .frame(width: 650, height: 550)
+        .frame(width: 650, height: 600)
     }
 
     private func resetFields() {
@@ -418,114 +436,131 @@ struct EditTaskSheet: View {
     }
 
     var body: some View {
-        VStack(spacing: 20) {
-            // Header
-            HStack {
-                Text("Edit Task")
-                    .font(.system(size: 18, weight: .semibold))
-                Spacer()
-                Button(action: {
-                    viewModel.deleteTask(task)
-                    dismiss()
-                }) {
-                    HStack(spacing: 4) {
-                        Image(systemName: "trash")
-                        Text("Delete")
+        VStack(spacing: 0) {
+            // Header (fixed)
+            VStack(spacing: 0) {
+                HStack {
+                    Text("Edit Task")
+                        .font(.system(size: 18, weight: .semibold))
+                    Spacer()
+                    Button(action: {
+                        viewModel.deleteTask(task)
+                        dismiss()
+                    }) {
+                        HStack(spacing: 4) {
+                            Image(systemName: "trash")
+                            Text("Delete")
+                        }
+                        .foregroundColor(.red)
+                        .font(.system(size: 12))
                     }
-                    .foregroundColor(.red)
-                    .font(.system(size: 12))
+                    .buttonStyle(.bordered)
                 }
-                .buttonStyle(.bordered)
+                .padding(24)
+                .padding(.bottom, 0)
+
+                Divider()
+                    .padding(.top, 16)
             }
 
-            // Title
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Title")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
-                TextField("Enter task title", text: $title)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 14))
-            }
+            // Scrollable content
+            ScrollView {
+                VStack(spacing: 20) {
+                    // Title
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Title")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
+                        TextField("Enter task title", text: $title)
+                            .textFieldStyle(.roundedBorder)
+                            .font(.system(size: 14))
+                    }
 
-            // Description
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Short Description")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
-                TextField("Quick summary (optional)", text: $description, axis: .vertical)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.system(size: 12))
-                    .lineLimit(2...3)
-            }
+                    // Description
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Short Description")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
+                        TextField("Quick summary (optional)", text: $description, axis: .vertical)
+                            .textFieldStyle(.roundedBorder)
+                            .font(.system(size: 12))
+                            .lineLimit(2...3)
+                    }
 
-            // Rich text notes
-            VStack(alignment: .leading, spacing: 6) {
-                Text("Detailed Notes (optional)")
-                    .font(.system(size: 12, weight: .medium))
-                    .foregroundColor(.secondary)
+                    // Rich text notes
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("Detailed Notes (optional)")
+                            .font(.system(size: 12, weight: .medium))
+                            .foregroundColor(.secondary)
 
-                RichTextEditorView(text: $notes)
+                        RichTextEditorView(text: $notes)
+                    }
+
+                    Divider()
+
+                    // Project selector (button style) and Status
+                    HStack(alignment: .top, spacing: 20) {
+                        VStack(alignment: .leading, spacing: 8) {
+                            Text("Project")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.secondary)
+
+                            HStack(spacing: 8) {
+                                ForEach(viewModel.projects) { project in
+                                    Button(action: {
+                                        projectId = project.id
+                                    }) {
+                                        HStack(spacing: 6) {
+                                            Circle()
+                                                .fill(project.color)
+                                                .frame(width: 10, height: 10)
+                                            Text(project.name)
+                                                .font(.system(size: 12, weight: .medium))
+                                        }
+                                        .padding(.horizontal, 12)
+                                        .padding(.vertical, 6)
+                                        .background(
+                                            projectId == project.id
+                                                ? project.color.opacity(0.15)
+                                                : Color.clear
+                                        )
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 6)
+                                                .stroke(
+                                                    projectId == project.id
+                                                        ? project.color
+                                                        : Color.secondary.opacity(0.3),
+                                                    lineWidth: projectId == project.id ? 2 : 1
+                                                )
+                                        )
+                                        .cornerRadius(6)
+                                    }
+                                    .buttonStyle(.plain)
+                                }
+                            }
+                        }
+
+                        Spacer()
+
+                        // Status display
+                        VStack(alignment: .trailing, spacing: 4) {
+                            Text("Status")
+                                .font(.system(size: 12, weight: .medium))
+                                .foregroundColor(.secondary)
+                            Text(task.status.displayName)
+                                .font(.system(size: 12))
+                                .foregroundColor(.secondary)
+                        }
+                    }
+                }
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 16)
             }
 
             Divider()
 
-            // Project selector (button style) and Status
-            HStack(alignment: .top, spacing: 20) {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Project")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(.secondary)
-
-                    HStack(spacing: 8) {
-                        ForEach(viewModel.projects) { project in
-                            Button(action: {
-                                projectId = project.id
-                            }) {
-                                HStack(spacing: 6) {
-                                    Circle()
-                                        .fill(project.color)
-                                        .frame(width: 10, height: 10)
-                                    Text(project.name)
-                                        .font(.system(size: 12, weight: .medium))
-                                }
-                                .padding(.horizontal, 12)
-                                .padding(.vertical, 6)
-                                .background(
-                                    projectId == project.id
-                                        ? project.color.opacity(0.15)
-                                        : Color.clear
-                                )
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 6)
-                                        .stroke(
-                                            projectId == project.id
-                                                ? project.color
-                                                : Color.secondary.opacity(0.3),
-                                            lineWidth: projectId == project.id ? 2 : 1
-                                        )
-                                )
-                                .cornerRadius(6)
-                            }
-                            .buttonStyle(.plain)
-                        }
-                    }
-                }
-
-                Spacer()
-
-                // Status display
-                VStack(alignment: .trailing, spacing: 4) {
-                    Text("Status")
-                        .font(.system(size: 12, weight: .medium))
-                        .foregroundColor(.secondary)
-                    Text(task.status.displayName)
-                        .font(.system(size: 12))
-                        .foregroundColor(.secondary)
-                }
-            }
-
-            // Action buttons
+            // Action buttons (fixed at bottom)
             HStack(spacing: 12) {
                 Button("Cancel") {
                     dismiss()
@@ -547,9 +582,10 @@ struct EditTaskSheet: View {
                 .buttonStyle(.borderedProminent)
                 .disabled(title.isEmpty)
             }
+            .padding(24)
+            .padding(.top, 16)
         }
-        .padding(24)
-        .frame(width: 650, height: 550)
+        .frame(width: 650, height: 600)
     }
 }
 
