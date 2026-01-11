@@ -18,31 +18,46 @@ A lightweight, distraction-free personal Kanban board built with Swift and Swift
 - **🎨 Minimal Design** - Clean, distraction-free interface
 - **📦 Zero Dependencies** - Uses only native macOS frameworks
 
-## 🚀 Quick Start
+---
 
-### Prerequisites
-- macOS 13.0 (Ventura) or later
-- Xcode 14.0+
+## 🚀 **Ready to Test?**
 
-### Installation
+> **👉 Start Here: [QUICKSTART.md](QUICKSTART.md)** - Build and run in 5 minutes!
 
-1. **Clone this repository:**
+All source code is ready in the `KanbanBoard/` folder. Just need to create an Xcode project and import the files.
+
+**Quick Setup:**
 ```bash
-git clone https://github.com/yourusername/kanban-board-macos.git
-cd kanban-board-macos
+# Run the setup helper
+./create-xcode-project.sh
+
+# Or follow the QUICKSTART guide step-by-step
 ```
 
-2. **Open in Xcode:**
+See **[QUICKSTART.md](QUICKSTART.md)** for complete instructions with 3 different methods.
+
+---
+
+## 🚀 Quick Start (For Reference)
+
+This project is **source-code ready** but needs an Xcode project file to run.
+
+### Option 1: Use QUICKSTART Guide (Recommended)
+Follow **[QUICKSTART.md](QUICKSTART.md)** for detailed step-by-step instructions.
+
+### Option 2: Manual Setup
+1. Open Xcode
+2. File > New > Project > macOS App
+3. Product Name: "KanbanBoard", Interface: SwiftUI
+4. Add all files from `KanbanBoard/` folder
+5. Press ⌘R to run
+
+### Option 3: Use Helper Script
 ```bash
-open KanbanBoard.xcodeproj
+./create-xcode-project.sh
 ```
 
-3. **Build and Run:**
-- Select your Mac as the run destination
-- Press ⌘R or click the Play button
-- The app launches with sample tasks
-
-**Or create from scratch:** See [SETUP.md](SETUP.md) for step-by-step instructions.
+See **[QUICKSTART.md](QUICKSTART.md)** for troubleshooting and detailed steps.
 
 ## 📸 Screenshots
 
