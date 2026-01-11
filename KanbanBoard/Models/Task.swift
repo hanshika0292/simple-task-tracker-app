@@ -11,6 +11,7 @@ struct Task: Identifiable, Codable {
     let id: UUID
     var title: String
     var description: String
+    var notes: String  // For longer text, code samples, thoughts
     var status: TaskStatus
     var projectId: UUID
     var createdAt: Date
@@ -20,6 +21,7 @@ struct Task: Identifiable, Codable {
         id: UUID = UUID(),
         title: String,
         description: String = "",
+        notes: String = "",
         status: TaskStatus = .backlog,
         projectId: UUID,
         createdAt: Date = Date(),
@@ -28,6 +30,7 @@ struct Task: Identifiable, Codable {
         self.id = id
         self.title = title
         self.description = description
+        self.notes = notes
         self.status = status
         self.projectId = projectId
         self.createdAt = createdAt

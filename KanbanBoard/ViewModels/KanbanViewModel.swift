@@ -61,10 +61,11 @@ class KanbanViewModel: ObservableObject {
 
     // MARK: - Task Management
 
-    func addTask(title: String, description: String, projectId: UUID) {
+    func addTask(title: String, description: String, notes: String = "", projectId: UUID) {
         let newTask = Task(
             title: title,
             description: description,
+            notes: notes,
             status: .backlog,
             projectId: projectId
         )
@@ -92,10 +93,24 @@ class KanbanViewModel: ObservableObject {
         }
     }
 
-    // MARK: - Filtering
+    // MARK: - Filtering & Sorting
 
     func tasks(for status: TaskStatus) -> [Task] {
         tasks.filter { $0.status == status }
+    }
+
+    func sortedTasks(for status: TaskStatus) -> [Task] {
+        let statusTasks = tasks(for: status)
+
+        // When a project is selected, sort tasks with selected project first
+        guard let selectedProjectId = selectedProjectId else {
+            return statusTasks
+        }
+
+        let selectedTasks = statusTasks.filter { $0.projectId == selectedProjectId }
+        let otherTasks = statusTasks.filter { $0.projectId != selectedProjectId }
+
+        return selectedTasks + otherTasks
     }
 
     func filteredTasks(for status: TaskStatus) -> [Task] {
@@ -124,6 +139,34 @@ class KanbanViewModel: ObservableObject {
         projects.append(newProject)
     }
 
+    func updateProject(_ project: Project) {
+        if let index = projects.firstIndex(where: { $0.id == project.id }) {
+            projects[index] = project
+        }
+    }
+
+    func deleteProject(_ project: Project) {
+        // Don't delete if it's the last project
+        guard projects.count > 1 else { return }
+
+        // Move tasks from deleted project to first remaining project
+        let remainingProject = projects.first { $0.id != project.id }
+        if let targetProjectId = remainingProject?.id {
+            for i in tasks.indices {
+                if tasks[i].projectId == project.id {
+                    tasks[i].projectId = targetProjectId
+                }
+            }
+        }
+
+        projects.removeAll { $0.id == project.id }
+
+        // Clear filter if deleting filtered project
+        if selectedProjectId == project.id {
+            selectedProjectId = nil
+        }
+    }
+
     func toggleProjectFilter(_ projectId: UUID) {
         if selectedProjectId == projectId {
             selectedProjectId = nil // Clear filter
@@ -146,16 +189,50 @@ class KanbanViewModel: ObservableObject {
         let learningId = projects[2].id
 
         let sampleTasks = [
-            Task(title: "Review Q1 roadmap", description: "Align with team priorities", status: .backlog, projectId: workId),
-            Task(title: "Fix authentication bug", description: "Users can't log in with SSO", status: .inProgress, projectId: workId),
-            Task(title: "Deploy to staging", description: "Test new API endpoints", status: .done, projectId: workId),
+            Task(title: "Review Q1 roadmap",
+                 description: "Align with team priorities",
+                 notes: "Key discussion points:\n- Revenue targets\n- New feature priorities\n- Team capacity planning",
+                 status: .backlog,
+                 projectId: workId),
 
-            Task(title: "Book dentist appointment", description: "Overdue checkup", status: .backlog, projectId: personalId),
-            Task(title: "Plan weekend trip", description: "Research hiking trails", status: .inProgress, projectId: personalId),
+            Task(title: "Fix authentication bug",
+                 description: "Users can't log in with SSO",
+                 notes: "Bug details:\n- Affects Safari users\n- Error: 'Invalid token'\n- Related to OAuth flow\n\nSolution:\nCheck token expiration logic in AuthService.swift",
+                 status: .inProgress,
+                 projectId: workId),
 
-            Task(title: "Complete SwiftUI course", description: "Chapters 5-7", status: .backlog, projectId: learningId),
-            Task(title: "Read Combine documentation", description: "Focus on publishers", status: .inProgress, projectId: learningId),
-            Task(title: "Build sample Kanban app", description: "Practice drag and drop", status: .done, projectId: learningId)
+            Task(title: "Deploy to staging",
+                 description: "Test new API endpoints",
+                 status: .done,
+                 projectId: workId),
+
+            Task(title: "Book dentist appointment",
+                 description: "Overdue checkup",
+                 status: .backlog,
+                 projectId: personalId),
+
+            Task(title: "Plan weekend trip",
+                 description: "Research hiking trails",
+                 notes: "Trail options:\n1. Mount Tamalpais - 7 miles\n2. Point Reyes - 10 miles\n3. Big Sur - overnight camping\n\nBring: water, snacks, sunscreen",
+                 status: .inProgress,
+                 projectId: personalId),
+
+            Task(title: "Complete SwiftUI course",
+                 description: "Chapters 5-7",
+                 notes: "Topics to cover:\n- State management\n- Combine framework\n- MVVM architecture\n\nPractice projects:\n- Todo list\n- Weather app",
+                 status: .backlog,
+                 projectId: learningId),
+
+            Task(title: "Read Combine documentation",
+                 description: "Focus on publishers",
+                 status: .inProgress,
+                 projectId: learningId),
+
+            Task(title: "Build sample Kanban app",
+                 description: "Practice drag and drop",
+                 notes: "Completed! ✅\n\nLearned:\n- NSItemProvider for drag data\n- onDrop modifier\n- UUID transfer via UTType.text",
+                 status: .done,
+                 projectId: learningId)
         ]
 
         tasks = sampleTasks
