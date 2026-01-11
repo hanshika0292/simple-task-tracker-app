@@ -20,6 +20,7 @@
 		E92AB5772F13B78B00E5137E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E92AB5692F13B78B00E5137E /* Info.plist */; };
 		E92AB5782F13B78B00E5137E /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB56B2F13B78B00E5137E /* PersistenceManager.swift */; };
 		E92AB57E2F13BD6200E5137E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5672F13B78B00E5137E /* ContentView.swift */; };
+		E92AB5842F13C71F00E5137E /* RichTextEditorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5832F13C71F00E5137E /* RichTextEditorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +61,7 @@
 		E92AB5692F13B78B00E5137E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E92AB56B2F13B78B00E5137E /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		E92AB57C2F13BB1C00E5137E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E92AB5832F13C71F00E5137E /* RichTextEditorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RichTextEditorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -161,6 +163,7 @@
 		E92AB5642F13B78B00E5137E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				E92AB5832F13C71F00E5137E /* RichTextEditorView.swift */,
 				E92AB5652F13B78B00E5137E /* ProjectFilterView.swift */,
 				E92AB5662F13B78B00E5137E /* TaskCardView.swift */,
 				E92AB5672F13B78B00E5137E /* ContentView.swift */,
@@ -323,6 +326,7 @@
 				E92AB56C2F13B78B00E5137E /* KanbanBoardApp.swift in Sources */,
 				E92AB5742F13B78B00E5137E /* TaskCardView.swift in Sources */,
 				E92AB57E2F13BD6200E5137E /* ContentView.swift in Sources */,
+				E92AB5842F13C71F00E5137E /* RichTextEditorView.swift in Sources */,
 				E92AB56F2F13B78B00E5137E /* Project.swift in Sources */,
 				E92AB5712F13B78B00E5137E /* Task.swift in Sources */,
 				E92AB56D2F13B78B00E5137E /* KanbanViewModel.swift in Sources */,
