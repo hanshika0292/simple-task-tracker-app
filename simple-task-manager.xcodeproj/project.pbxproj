@@ -7,13 +7,19 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		E92AB5242F138A4200E5137E /* simple_task_managerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5232F138A4200E5137E /* simple_task_managerApp.swift */; };
-		E92AB5262F138A4200E5137E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5252F138A4200E5137E /* ContentView.swift */; };
 		E92AB5282F138A4700E5137E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92AB5272F138A4700E5137E /* Assets.xcassets */; };
-		E92AB52B2F138A4700E5137E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92AB52A2F138A4700E5137E /* Preview Assets.xcassets */; };
-		E92AB5362F138A4700E5137E /* simple_task_managerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5352F138A4700E5137E /* simple_task_managerTests.swift */; };
-		E92AB5402F138A4700E5137E /* simple_task_managerUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB53F2F138A4700E5137E /* simple_task_managerUITests.swift */; };
-		E92AB5422F138A4700E5137E /* simple_task_managerUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5412F138A4700E5137E /* simple_task_managerUITestsLaunchTests.swift */; };
+		E92AB56C2F13B78B00E5137E /* KanbanBoardApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5592F13B78B00E5137E /* KanbanBoardApp.swift */; };
+		E92AB56D2F13B78B00E5137E /* KanbanViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB55B2F13B78B00E5137E /* KanbanViewModel.swift */; };
+		E92AB56F2F13B78B00E5137E /* Project.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB55F2F13B78B00E5137E /* Project.swift */; };
+		E92AB5702F13B78B00E5137E /* TaskStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5602F13B78B00E5137E /* TaskStatus.swift */; };
+		E92AB5712F13B78B00E5137E /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5612F13B78B00E5137E /* Task.swift */; };
+		E92AB5722F13B78B00E5137E /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E92AB5632F13B78B00E5137E /* Preview Assets.xcassets */; };
+		E92AB5732F13B78B00E5137E /* ProjectFilterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5652F13B78B00E5137E /* ProjectFilterView.swift */; };
+		E92AB5742F13B78B00E5137E /* TaskCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5662F13B78B00E5137E /* TaskCardView.swift */; };
+		E92AB5762F13B78B00E5137E /* KanbanColumnView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5682F13B78B00E5137E /* KanbanColumnView.swift */; };
+		E92AB5772F13B78B00E5137E /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = E92AB5692F13B78B00E5137E /* Info.plist */; };
+		E92AB5782F13B78B00E5137E /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB56B2F13B78B00E5137E /* PersistenceManager.swift */; };
+		E92AB57E2F13BD6200E5137E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E92AB5672F13B78B00E5137E /* ContentView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,16 +41,25 @@
 
 /* Begin PBXFileReference section */
 		E92AB5202F138A4200E5137E /* simple-task-manager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "simple-task-manager.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E92AB5232F138A4200E5137E /* simple_task_managerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple_task_managerApp.swift; sourceTree = "<group>"; };
-		E92AB5252F138A4200E5137E /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		E92AB5272F138A4700E5137E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E92AB52A2F138A4700E5137E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		E92AB52C2F138A4700E5137E /* simple_task_manager.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = simple_task_manager.entitlements; sourceTree = "<group>"; };
 		E92AB5312F138A4700E5137E /* simple-task-managerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "simple-task-managerTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E92AB5352F138A4700E5137E /* simple_task_managerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple_task_managerTests.swift; sourceTree = "<group>"; };
 		E92AB53B2F138A4700E5137E /* simple-task-managerUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "simple-task-managerUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		E92AB53F2F138A4700E5137E /* simple_task_managerUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple_task_managerUITests.swift; sourceTree = "<group>"; };
-		E92AB5412F138A4700E5137E /* simple_task_managerUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = simple_task_managerUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		E92AB5592F13B78B00E5137E /* KanbanBoardApp.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanbanBoardApp.swift; sourceTree = "<group>"; };
+		E92AB55B2F13B78B00E5137E /* KanbanViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanbanViewModel.swift; sourceTree = "<group>"; };
+		E92AB55C2F13B78B00E5137E /* KanbanBoard.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = KanbanBoard.entitlements; sourceTree = "<group>"; };
+		E92AB55D2F13B78B00E5137E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		E92AB55F2F13B78B00E5137E /* Project.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Project.swift; sourceTree = "<group>"; };
+		E92AB5602F13B78B00E5137E /* TaskStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskStatus.swift; sourceTree = "<group>"; };
+		E92AB5612F13B78B00E5137E /* Task.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
+		E92AB5632F13B78B00E5137E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		E92AB5652F13B78B00E5137E /* ProjectFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProjectFilterView.swift; sourceTree = "<group>"; };
+		E92AB5662F13B78B00E5137E /* TaskCardView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TaskCardView.swift; sourceTree = "<group>"; };
+		E92AB5672F13B78B00E5137E /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		E92AB5682F13B78B00E5137E /* KanbanColumnView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KanbanColumnView.swift; sourceTree = "<group>"; };
+		E92AB5692F13B78B00E5137E /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		E92AB56B2F13B78B00E5137E /* PersistenceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
+		E92AB57C2F13BB1C00E5137E /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,8 +91,6 @@
 			isa = PBXGroup;
 			children = (
 				E92AB5222F138A4200E5137E /* simple-task-manager */,
-				E92AB5342F138A4700E5137E /* simple-task-managerTests */,
-				E92AB53E2F138A4700E5137E /* simple-task-managerUITests */,
 				E92AB5212F138A4200E5137E /* Products */,
 			);
 			sourceTree = "<group>";
@@ -95,38 +108,81 @@
 		E92AB5222F138A4200E5137E /* simple-task-manager */ = {
 			isa = PBXGroup;
 			children = (
-				E92AB5232F138A4200E5137E /* simple_task_managerApp.swift */,
-				E92AB5252F138A4200E5137E /* ContentView.swift */,
+				E92AB5582F13B78B00E5137E /* KanbanBoard */,
 				E92AB5272F138A4700E5137E /* Assets.xcassets */,
 				E92AB52C2F138A4700E5137E /* simple_task_manager.entitlements */,
-				E92AB5292F138A4700E5137E /* Preview Content */,
 			);
 			path = "simple-task-manager";
 			sourceTree = "<group>";
 		};
-		E92AB5292F138A4700E5137E /* Preview Content */ = {
+		E92AB5582F13B78B00E5137E /* KanbanBoard */ = {
 			isa = PBXGroup;
 			children = (
-				E92AB52A2F138A4700E5137E /* Preview Assets.xcassets */,
+				E92AB5792F13BAE300E5137E /* PreviewContent */,
+				E92AB5592F13B78B00E5137E /* KanbanBoardApp.swift */,
+				E92AB55A2F13B78B00E5137E /* ViewModels */,
+				E92AB55C2F13B78B00E5137E /* KanbanBoard.entitlements */,
+				E92AB55D2F13B78B00E5137E /* Assets.xcassets */,
+				E92AB55E2F13B78B00E5137E /* Models */,
+				E92AB5622F13B78B00E5137E /* Preview Content */,
+				E92AB5642F13B78B00E5137E /* Views */,
+				E92AB5692F13B78B00E5137E /* Info.plist */,
+				E92AB56A2F13B78B00E5137E /* Services */,
+			);
+			path = KanbanBoard;
+			sourceTree = SOURCE_ROOT;
+		};
+		E92AB55A2F13B78B00E5137E /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				E92AB55B2F13B78B00E5137E /* KanbanViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		E92AB55E2F13B78B00E5137E /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				E92AB55F2F13B78B00E5137E /* Project.swift */,
+				E92AB5602F13B78B00E5137E /* TaskStatus.swift */,
+				E92AB5612F13B78B00E5137E /* Task.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		E92AB5622F13B78B00E5137E /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				E92AB5632F13B78B00E5137E /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
-		E92AB5342F138A4700E5137E /* simple-task-managerTests */ = {
+		E92AB5642F13B78B00E5137E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E92AB5352F138A4700E5137E /* simple_task_managerTests.swift */,
+				E92AB5652F13B78B00E5137E /* ProjectFilterView.swift */,
+				E92AB5662F13B78B00E5137E /* TaskCardView.swift */,
+				E92AB5672F13B78B00E5137E /* ContentView.swift */,
+				E92AB5682F13B78B00E5137E /* KanbanColumnView.swift */,
 			);
-			path = "simple-task-managerTests";
+			path = Views;
 			sourceTree = "<group>";
 		};
-		E92AB53E2F138A4700E5137E /* simple-task-managerUITests */ = {
+		E92AB56A2F13B78B00E5137E /* Services */ = {
 			isa = PBXGroup;
 			children = (
-				E92AB53F2F138A4700E5137E /* simple_task_managerUITests.swift */,
-				E92AB5412F138A4700E5137E /* simple_task_managerUITestsLaunchTests.swift */,
+				E92AB56B2F13B78B00E5137E /* PersistenceManager.swift */,
 			);
-			path = "simple-task-managerUITests";
+			path = Services;
+			sourceTree = "<group>";
+		};
+		E92AB5792F13BAE300E5137E /* PreviewContent */ = {
+			isa = PBXGroup;
+			children = (
+				E92AB57C2F13BB1C00E5137E /* Preview Assets.xcassets */,
+			);
+			path = PreviewContent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,7 +289,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E92AB52B2F138A4700E5137E /* Preview Assets.xcassets in Resources */,
+				E92AB5722F13B78B00E5137E /* Preview Assets.xcassets in Resources */,
+				E92AB5772F13B78B00E5137E /* Info.plist in Resources */,
 				E92AB5282F138A4700E5137E /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,8 +316,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E92AB5262F138A4200E5137E /* ContentView.swift in Sources */,
-				E92AB5242F138A4200E5137E /* simple_task_managerApp.swift in Sources */,
+				E92AB5702F13B78B00E5137E /* TaskStatus.swift in Sources */,
+				E92AB5732F13B78B00E5137E /* ProjectFilterView.swift in Sources */,
+				E92AB5782F13B78B00E5137E /* PersistenceManager.swift in Sources */,
+				E92AB5762F13B78B00E5137E /* KanbanColumnView.swift in Sources */,
+				E92AB56C2F13B78B00E5137E /* KanbanBoardApp.swift in Sources */,
+				E92AB5742F13B78B00E5137E /* TaskCardView.swift in Sources */,
+				E92AB57E2F13BD6200E5137E /* ContentView.swift in Sources */,
+				E92AB56F2F13B78B00E5137E /* Project.swift in Sources */,
+				E92AB5712F13B78B00E5137E /* Task.swift in Sources */,
+				E92AB56D2F13B78B00E5137E /* KanbanViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +333,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E92AB5362F138A4700E5137E /* simple_task_managerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,8 +340,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E92AB5402F138A4700E5137E /* simple_task_managerUITests.swift in Sources */,
-				E92AB5422F138A4700E5137E /* simple_task_managerUITestsLaunchTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,7 +486,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"simple-task-manager/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KanbanBoard/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
@@ -449,7 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_ASSET_PATHS = "\"simple-task-manager/Preview Content\"";
+				DEVELOPMENT_ASSET_PATHS = "\"KanbanBoard/Preview Content\"";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
