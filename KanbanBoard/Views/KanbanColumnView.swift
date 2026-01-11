@@ -12,6 +12,7 @@ struct KanbanColumnView: View {
     let status: TaskStatus
     let tasks: [Task]
     @ObservedObject var viewModel: KanbanViewModel
+    let onEditTask: (Task) -> Void
 
     @State private var isTargeted = false
 
@@ -49,6 +50,9 @@ struct KanbanColumnView: View {
                             isDimmed: viewModel.isTaskDimmed(task),
                             onDelete: {
                                 viewModel.deleteTask(task)
+                            },
+                            onEdit: {
+                                onEditTask(task)
                             }
                         )
                         .onDrag {

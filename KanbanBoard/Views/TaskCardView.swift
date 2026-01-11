@@ -12,9 +12,25 @@ struct TaskCardView: View {
     let project: Project?
     let isDimmed: Bool
     let onDelete: () -> Void
+    let onEdit: () -> Void
 
     @State private var isHovering = false
     @State private var isExpanded = false
+
+    // Compute preview of notes (first 150 words)
+    private var notesPreview: String {
+        guard !task.notes.isEmpty else { return "" }
+        let words = task.notes.split(separator: " ")
+        if words.count <= 150 {
+            return task.notes
+        }
+        return words.prefix(150).joined(separator: " ") + "..."
+    }
+
+    private var hasMoreContent: Bool {
+        let words = task.notes.split(separator: " ")
+        return words.count > 150
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
@@ -39,15 +55,27 @@ struct TaskCardView: View {
                             .lineLimit(isExpanded ? nil : 2)
                     }
 
-                    // Show notes if expanded
+                    // Show notes preview when expanded
                     if isExpanded && !task.notes.isEmpty {
-                        Text(task.notes)
+                        Text(notesPreview)
                             .font(.system(size: 10, design: .monospaced))
                             .foregroundColor(.secondary.opacity(0.8))
                             .padding(6)
                             .frame(maxWidth: .infinity, alignment: .leading)
                             .background(Color(nsColor: .textBackgroundColor))
                             .cornerRadius(4)
+
+                        if hasMoreContent {
+                            Button(action: onEdit) {
+                                HStack(spacing: 4) {
+                                    Image(systemName: "doc.text.magnifyingglass")
+                                    Text("Open Full Note")
+                                }
+                                .font(.system(size: 9, weight: .medium))
+                                .foregroundColor(.accentColor)
+                            }
+                            .buttonStyle(.plain)
+                        }
                     }
 
                     HStack(spacing: 6) {
@@ -73,6 +101,17 @@ struct TaskCardView: View {
                             }
                             .buttonStyle(.plain)
                         }
+
+                        // Edit button
+                        Button(action: onEdit) {
+                            HStack(spacing: 2) {
+                                Image(systemName: "pencil")
+                                Text("Edit")
+                            }
+                            .font(.system(size: 9, weight: .medium))
+                            .foregroundColor(.secondary)
+                        }
+                        .buttonStyle(.plain)
                     }
                 }
 
