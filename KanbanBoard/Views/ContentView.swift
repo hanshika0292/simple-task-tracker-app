@@ -48,7 +48,6 @@ struct ContentView: View {
                     .font(.system(size: 12))
                 }
                 .buttonStyle(.borderedProminent)
-                .keyboardShortcut("n", modifiers: .command)
                 .help("Add new task (⌘N)")
             }
             .padding(16)
@@ -76,6 +75,14 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(nsColor: .windowBackgroundColor))
         }
+        .background(
+            // Hidden button for keyboard shortcut
+            Button("") {
+                openNewTask()
+            }
+            .keyboardShortcut("n", modifiers: .command)
+            .hidden()
+        )
         .sheet(isPresented: $showingAddTask) {
             AddTaskSheet(
                 viewModel: viewModel,

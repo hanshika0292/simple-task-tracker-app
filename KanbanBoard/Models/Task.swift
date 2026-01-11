@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Task: Identifiable, Codable {
+struct Task: Identifiable, Codable, Hashable {
     let id: UUID
     var title: String
     var description: String
@@ -35,5 +35,14 @@ struct Task: Identifiable, Codable {
         self.projectId = projectId
         self.createdAt = createdAt
         self.updatedAt = updatedAt
+    }
+
+    // Explicit Hashable conformance
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+    }
+
+    static func == (lhs: Task, rhs: Task) -> Bool {
+        lhs.id == rhs.id
     }
 }
