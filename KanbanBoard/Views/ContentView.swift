@@ -11,7 +11,6 @@ struct ContentView: View {
     @StateObject private var viewModel = KanbanViewModel()
     @State private var showingAddTask = false
     @State private var showingProjectManager = false
-    @State private var showingEditTask = false
     @State private var editingTask: Task?
     @State private var newTaskTitle = ""
     @State private var newTaskDescription = ""
@@ -40,8 +39,7 @@ struct ContentView: View {
                 .help("Manage projects")
 
                 Button(action: {
-                    showingAddTask = true
-                    selectedProjectId = viewModel.projects.first?.id
+                    openNewTask()
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "plus")
@@ -50,7 +48,7 @@ struct ContentView: View {
                     .font(.system(size: 12))
                 }
                 .buttonStyle(.borderedProminent)
-                .help("Add new task")
+                .help("Add new task (⌘N)")
             }
             .padding(16)
             .background(Color(nsColor: .windowBackgroundColor))
@@ -77,6 +75,14 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .background(Color(nsColor: .windowBackgroundColor))
         }
+        .background(
+            // Hidden button for keyboard shortcut
+            Button("") {
+                openNewTask()
+            }
+            .keyboardShortcut("n", modifiers: .command)
+            .hidden()
+        )
         .sheet(isPresented: $showingAddTask) {
             AddTaskSheet(
                 viewModel: viewModel,
@@ -90,20 +96,21 @@ struct ContentView: View {
         .sheet(isPresented: $showingProjectManager) {
             ProjectManagerSheet(viewModel: viewModel, isPresented: $showingProjectManager)
         }
-        .sheet(isPresented: $showingEditTask) {
-            if let task = editingTask {
-                EditTaskSheet(
-                    viewModel: viewModel,
-                    isPresented: $showingEditTask,
-                    task: task
-                )
-            }
+        .sheet(item: $editingTask) { task in
+            EditTaskSheet(
+                viewModel: viewModel,
+                task: task
+            )
         }
+    }
+
+    func openNewTask() {
+        selectedProjectId = viewModel.projects.first?.id
+        showingAddTask = true
     }
 
     func openEditTask(_ task: Task) {
         editingTask = task
-        showingEditTask = true
     }
 }
 
@@ -136,6 +143,47 @@ struct AddTaskSheet: View {
                     .font(.system(size: 14))
             }
 
+            // Project selector (button style)
+            VStack(alignment: .leading, spacing: 8) {
+                Text("Project")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(.secondary)
+
+                HStack(spacing: 8) {
+                    ForEach(viewModel.projects) { project in
+                        Button(action: {
+                            selectedProjectId = project.id
+                        }) {
+                            HStack(spacing: 6) {
+                                Circle()
+                                    .fill(project.color)
+                                    .frame(width: 10, height: 10)
+                                Text(project.name)
+                                    .font(.system(size: 12, weight: .medium))
+                            }
+                            .padding(.horizontal, 12)
+                            .padding(.vertical, 6)
+                            .background(
+                                selectedProjectId == project.id
+                                    ? project.color.opacity(0.15)
+                                    : Color.clear
+                            )
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 6)
+                                    .stroke(
+                                        selectedProjectId == project.id
+                                            ? project.color
+                                            : Color.secondary.opacity(0.3),
+                                        lineWidth: selectedProjectId == project.id ? 2 : 1
+                                    )
+                            )
+                            .cornerRadius(6)
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
+            }
+
             // Description
             VStack(alignment: .leading, spacing: 6) {
                 Text("Short Description")
@@ -154,30 +202,6 @@ struct AddTaskSheet: View {
                     .foregroundColor(.secondary)
 
                 RichTextEditorView(text: $notes)
-            }
-
-            Divider()
-
-            // Project picker
-            HStack {
-                Text("Project:")
-                    .font(.system(size: 12, weight: .medium))
-
-                Picker("", selection: $selectedProjectId) {
-                    ForEach(viewModel.projects) { project in
-                        HStack {
-                            Circle()
-                                .fill(project.color)
-                                .frame(width: 8, height: 8)
-                            Text(project.name)
-                        }
-                        .tag(project.id as UUID?)
-                    }
-                }
-                .pickerStyle(.menu)
-                .frame(width: 150)
-
-                Spacer()
             }
 
             // Action buttons
@@ -376,7 +400,7 @@ struct ProjectManagerSheet: View {
 
 struct EditTaskSheet: View {
     @ObservedObject var viewModel: KanbanViewModel
-    @Binding var isPresented: Bool
+    @Environment(\.dismiss) private var dismiss
     let task: Task
 
     @State private var title: String
@@ -384,9 +408,8 @@ struct EditTaskSheet: View {
     @State private var notes: String
     @State private var projectId: UUID
 
-    init(viewModel: KanbanViewModel, isPresented: Binding<Bool>, task: Task) {
+    init(viewModel: KanbanViewModel, task: Task) {
         self.viewModel = viewModel
-        self._isPresented = isPresented
         self.task = task
         self._title = State(initialValue: task.title)
         self._description = State(initialValue: task.description)
@@ -403,7 +426,7 @@ struct EditTaskSheet: View {
                 Spacer()
                 Button(action: {
                     viewModel.deleteTask(task)
-                    isPresented = false
+                    dismiss()
                 }) {
                     HStack(spacing: 4) {
                         Image(systemName: "trash")
@@ -447,33 +470,55 @@ struct EditTaskSheet: View {
 
             Divider()
 
-            // Project and status
-            HStack(spacing: 16) {
-                HStack {
-                    Text("Project:")
+            // Project selector (button style) and Status
+            HStack(alignment: .top, spacing: 20) {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Project")
                         .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.secondary)
 
-                    Picker("", selection: $projectId) {
+                    HStack(spacing: 8) {
                         ForEach(viewModel.projects) { project in
-                            HStack {
-                                Circle()
-                                    .fill(project.color)
-                                    .frame(width: 8, height: 8)
-                                Text(project.name)
+                            Button(action: {
+                                projectId = project.id
+                            }) {
+                                HStack(spacing: 6) {
+                                    Circle()
+                                        .fill(project.color)
+                                        .frame(width: 10, height: 10)
+                                    Text(project.name)
+                                        .font(.system(size: 12, weight: .medium))
+                                }
+                                .padding(.horizontal, 12)
+                                .padding(.vertical, 6)
+                                .background(
+                                    projectId == project.id
+                                        ? project.color.opacity(0.15)
+                                        : Color.clear
+                                )
+                                .overlay(
+                                    RoundedRectangle(cornerRadius: 6)
+                                        .stroke(
+                                            projectId == project.id
+                                                ? project.color
+                                                : Color.secondary.opacity(0.3),
+                                            lineWidth: projectId == project.id ? 2 : 1
+                                        )
+                                )
+                                .cornerRadius(6)
                             }
-                            .tag(project.id)
+                            .buttonStyle(.plain)
                         }
                     }
-                    .pickerStyle(.menu)
-                    .frame(width: 150)
                 }
 
                 Spacer()
 
                 // Status display
-                HStack {
-                    Text("Status:")
+                VStack(alignment: .trailing, spacing: 4) {
+                    Text("Status")
                         .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.secondary)
                     Text(task.status.displayName)
                         .font(.system(size: 12))
                         .foregroundColor(.secondary)
@@ -483,7 +528,7 @@ struct EditTaskSheet: View {
             // Action buttons
             HStack(spacing: 12) {
                 Button("Cancel") {
-                    isPresented = false
+                    dismiss()
                 }
                 .keyboardShortcut(.cancelAction)
 
@@ -496,7 +541,7 @@ struct EditTaskSheet: View {
                     updatedTask.notes = notes
                     updatedTask.projectId = projectId
                     viewModel.updateTask(updatedTask)
-                    isPresented = false
+                    dismiss()
                 }
                 .keyboardShortcut(.defaultAction)
                 .buttonStyle(.borderedProminent)
