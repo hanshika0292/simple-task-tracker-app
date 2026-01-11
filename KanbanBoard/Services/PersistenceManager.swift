@@ -17,9 +17,19 @@ class PersistenceManager {
         let paths = FileManager.default.urls(for: .applicationSupportDirectory, in: .userDomainMask)
         let appSupportDir = paths[0].appendingPathComponent("KanbanBoard", isDirectory: true)
 
+        // Debug: Print the actual path being used
+        print("📁 Data directory path: \(appSupportDir.path)")
+
         // Create directory if it doesn't exist
         if !FileManager.default.fileExists(atPath: appSupportDir.path) {
-            try? FileManager.default.createDirectory(at: appSupportDir, withIntermediateDirectories: true)
+            do {
+                try FileManager.default.createDirectory(at: appSupportDir, withIntermediateDirectories: true)
+                print("✅ Created data directory at: \(appSupportDir.path)")
+            } catch {
+                print("❌ Failed to create directory: \(error)")
+            }
+        } else {
+            print("✅ Data directory exists at: \(appSupportDir.path)")
         }
 
         return appSupportDir
@@ -41,8 +51,9 @@ class PersistenceManager {
             encoder.outputFormatting = .prettyPrinted
             let data = try encoder.encode(tasks)
             try data.write(to: tasksURL)
+            print("💾 Saved \(tasks.count) tasks to: \(tasksURL.path)")
         } catch {
-            print("Error saving tasks: \(error)")
+            print("❌ Error saving tasks: \(error)")
         }
     }
 
@@ -69,8 +80,9 @@ class PersistenceManager {
             encoder.outputFormatting = .prettyPrinted
             let data = try encoder.encode(projects)
             try data.write(to: projectsURL)
+            print("💾 Saved \(projects.count) projects to: \(projectsURL.path)")
         } catch {
-            print("Error saving projects: \(error)")
+            print("❌ Error saving projects: \(error)")
         }
     }
 
